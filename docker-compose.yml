@@ -11,9 +11,8 @@ services:
       VIKUNJA_DATABASE_DATABASE: vikunja
 
       VIKUNJA_SERVICE_TIMEZONE: ${TZ}
-      VIKUNJA_SERVICE_ENABLEREGISTRATION: 1
       VIKUNJA_SERVICE_ENABLETASKATTACHMENTS: 1
-## ENABLEREGISTRATION=0 to disable registration
+## ENABLEREGISTRATION=0 to disable registration // Supprimer le frontend
       VIKUNJA_SERVICE_ENABLEREGISTRATION: 1
       VIKUNJA_SERVICE_ENABLEEMAILREMINDERS: 1
       VIKUNJA_MAILER_ENABLED: 1
@@ -36,14 +35,14 @@ services:
       - "traefik.enable=true"
       - "traefik.HTTP.ROUTERS.VIKUNJA-API.RULe=Host(`${DOMAIN_NAME}`) && PathPrefix(`/api/v1`, `/dav/`, `/.well-known/`)"
       - "traefik.http.routers.vikunja-api.entrypoints=websecure"
-      - "traefik.http.routers.vikunja-api.tls.certResolver=acme"
+      - "traefik.http.routers.vikunja-api.tls.certResolver=letsencrypt"
   frontend:
     image: vikunja/frontend
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.vikunja-frontend.rule=Host(`${DOMAIN_NAME}`)"
       - "traefik.http.routers.vikunja-frontend.entrypoints=websecure"
-      - "traefik.http.routers.vikunja-frontend.tls.certResolver=acme"
+      - "traefik.http.routers.vikunja-frontend.tls.certResolver=letsencrypt"
     networks:
       - proxy
       - default
