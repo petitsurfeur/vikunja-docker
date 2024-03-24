@@ -1,0 +1,8 @@
+# Environment variables
+.env
+docker-compose.yml.OLD
+
+# Build folders
+db/
+files/
+
